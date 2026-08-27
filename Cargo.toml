@@ -1,6 +1,6 @@
 [package]
 name = "hypr_zoomer"
-version = "0.1.2"
+version = "0.1.3"
 edition = "2024"
 description = "High performance wayland screen magnification, zoom, and live presentation annotation tool."
 license = "MIT"
