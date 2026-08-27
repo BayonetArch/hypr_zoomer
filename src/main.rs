@@ -7,7 +7,7 @@ use std::path::PathBuf;
 #[derive(Parser, Debug)]
 #[command(name = "hypr_zoomer")]
 #[command(author = "DeepMind & Antigravity")]
-#[command(version = "0.1.0")]
+#[command(version = env!("CARGO_PKG_VERSION"))]
 #[command(about = "High-performance Wayland screen zoomer & presentation magnification tool inspired by Boomer", long_about = None)]
 struct Cli {
     
