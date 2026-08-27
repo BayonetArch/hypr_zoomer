@@ -137,8 +137,12 @@ pub fn parse_ppm(data: &[u8]) -> Result<ScreenImage> {
         bail!("Unsupported PPM maxval: expected 255, got {}", maxval);
     }
 
-    
-    skip_whitespace_and_comments(data, &mut pos);
+    // PPM P6 spec: exactly ONE whitespace byte separates the header from binary pixel data.
+    // Do NOT skip more than one byte here — pixel bytes can be ASCII whitespace values
+    // (e.g. 0x0A = newline) and would be silently eaten, causing "Insufficient RGB data".
+    if pos < data.len() && data[pos].is_ascii_whitespace() {
+        pos += 1;
+    }
     if pos >= data.len() {
         bail!("Missing binary pixel data in PPM");
     }

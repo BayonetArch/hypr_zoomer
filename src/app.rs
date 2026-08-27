@@ -82,18 +82,8 @@ impl App {
         initial_scale: Option<f32>,
         geometry: Option<String>,
     ) -> Result<Self> {
-        let image = capture_screen(geometry.as_deref(), None, false).unwrap_or_else(|_| {
-            let mut img = ScreenImage::new(1920, 1080);
-            for y in 0..1080 {
-                for x in 0..1920 {
-                    let r = ((x * 255) / 1920) as u8;
-                    let g = ((y * 255) / 1080) as u8;
-                    let b = 128;
-                    img.set_pixel(x, y, [r, g, b, 255]);
-                }
-            }
-            img
-        });
+        let image = capture_screen(geometry.as_deref(), None, false)
+            .map_err(|e| anyhow::anyhow!("Screen capture failed: {}\n\nMake sure 'grim' is installed and you're running on a Wayland session.", e))?;
 
         let mut camera = Camera::new(image.width as f32, image.height as f32);
         camera.set_scale_friction(config.general.scale_friction);
