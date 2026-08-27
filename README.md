@@ -15,8 +15,7 @@ A screen magnifier and annotation tool for wayland compositors(hyprland), inspir
 1. build
 
 ```bash
-    git clone https://github.com/BayonetArch/hypr_zoomer.git && cd hypr_zoomer && cargo b --release 
-
+ git clone https://github.com/BayonetArch/hypr_zoomer.git && cd hypr_zoomer && cargo b --release 
 
 ```
 *the bin is at* `target/release/hypr_zoomer`
@@ -24,14 +23,13 @@ A screen magnifier and annotation tool for wayland compositors(hyprland), inspir
 2. from crates.io:
 
 ```bash
-    cargo install hypr_zoomer
+ cargo install hypr_zoomer
 ```
 
 3. github
 
 ```bash
-    cargo install --git "https://github.com/BayonetArch/hypr_zoomer.git"
-
+ cargo install --git "https://github.com/BayonetArch/hypr_zoomer.git"
 ```
 
 ## Controls

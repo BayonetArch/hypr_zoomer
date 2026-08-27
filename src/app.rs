@@ -1,3 +1,11 @@
+/*
+ * hypr_zoomer
+ * a zooming tool for wayland
+ * Copyright (c) 2026 BayonetArch
+ *
+ * This software is released under the MIT License.
+ * See LICENSE file for details.
+ */
 use crate::annotations::{Annotation, AnnotationManager, Arrow, Color, RectAnnotation, Stroke};
 use crate::camera::Camera;
 use crate::capture::{ScreenImage, capture_screen};
@@ -214,6 +222,7 @@ impl App {
         }
 
         if self.flashlight_enabled {
+            // flash
             self.renderer.apply_flashlight(
                 &mut self.framebuffer,
                 self.cursor_pos,
@@ -377,6 +386,11 @@ impl ApplicationHandler for App {
                 if self.is_left_down {
                     if self.current_tool == ToolMode::Pan {
                         self.camera.drag_update(self.cursor_pos);
+                    } else if self.current_tool == ToolMode::Brush {
+                        let world_pos = self.camera.screen_to_world(self.cursor_pos);
+                        if let Some(ref mut stroke) = self.active_stroke {
+                            stroke.add_point(world_pos);
+                        }
                     }
                 }
 
@@ -403,11 +417,23 @@ impl ApplicationHandler for App {
                                     Some(self.camera.screen_to_world(self.cursor_pos));
                             } else if self.current_tool == ToolMode::Box {
                                 self.box_start = Some(self.camera.screen_to_world(self.cursor_pos));
+                            } else if self.current_tool == ToolMode::Brush {
+                                let world_pos = self.camera.screen_to_world(self.cursor_pos);
+                                let mut stroke =
+                                    Stroke::new(self.active_color, self.brush_thickness);
+                                stroke.add_point(world_pos);
+                                self.active_stroke = Some(stroke);
                             } else {
                                 self.camera.drag_start(self.cursor_pos);
                             }
                         } else {
-                            if let Some(start) = self.box_start.take() {
+                            if self.current_tool == ToolMode::Brush {
+                                if let Some(stroke) = self.active_stroke.take() {
+                                    if stroke.points.len() >= 2 {
+                                        self.annotations.push(Annotation::Stroke(stroke));
+                                    }
+                                }
+                            } else if let Some(start) = self.box_start.take() {
                                 let curr = self.camera.screen_to_world(self.cursor_pos);
                                 let rect = Rect::from_points(start, curr);
                                 if self.modifiers.shift_key() {
