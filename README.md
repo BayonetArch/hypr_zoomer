@@ -36,6 +36,7 @@ A screen magnifier and annotation tool for wayland compositors(hyprland), inspir
 
 | Action | Shortcut |
 |---|---|
+| Show keybindings help | `?` |
 | Zoom in / out | Mouse wheel or `=` / `-` |
 | Pan / drag | Left click + drag or middle click + drag |
 | Freehand draw | Right click + drag or `d` |
@@ -50,12 +51,12 @@ A screen magnifier and annotation tool for wayland compositors(hyprland), inspir
 | Invert colors | `i` |
 | Toggle pixel grid | `g` |
 | Toggle HUD | `h` |
-| Undo / redo | `u` / Ctrl+Z / Ctrl+Y |
+| Undo / redo | `u` / Ctrl+Z / Ctrl+Shift+Z |
 | Clear annotations | `c` |
 | Switch colors | `1`-`5` (red, green, blue, yellow, magenta) |
 | Copy color under cursor | `x` / `k` (hex), Shift+`x` (rgb), Ctrl+Shift+`x` (hsl) |
 | Copy image to clipboard | `y` or Ctrl+C |
-| Save image to file | `s` or Ctrl+S |
+| Save image to file | `s` |
 | Frame active window | `w` (hyprland only) |
 | Quit | Esc or `q` |
 
